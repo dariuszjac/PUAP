@@ -6,25 +6,25 @@ T1 = [0.02 0.05 0.1 0.2 0.3 0.5 0.7 1 1.3 1.5 2 4 6 8 10 20 50 100 200 500 1000]
 
 for i = 1:length(T1);
     G1(i) = tf(1,[T1(i) 1],'InputDelay',1);
-    [T1_L2_Kp3(:,i) normaG1(i)]=identyfikacja(G1(i));
-    G1_CC(i)=tf(T1_L2_Kp3(3,i),[T1_L2_Kp3(1,i) 1],'InputDelay',T1_L2_Kp3(2,i));
+    [parametryG1(:,i) normaG1(i)]=identyfikacja(G1(i));
+    G1_CC(i)=tf(1,[parametryG1(1:i) 1],'InputDelay',parametryG1(2,i));
 end
-%%
+
 T2 = [0.01 0.02 0.05 0.1 0.2 0.3 0.5 0.7 1 1.3 1.5 2 4 6 8 10 20 50 100 200 500];
 for i = 1:length(T2);
-    G2(i) = tf(1,[T2(i)*T2(i) 2*T2(i) 1],'InputDelay',1);
-    [T1_L2_Kp3_P2(:,i) normaG2(i)]=identyfikacja(G2(i));
-    G2_CC(i)=tf(1,[T1_L2_Kp3(1,i) 1],'InputDelay',T1_L2_Kp3(2,i));
+    G2(i) = tf(1,[T2(i) 1],'InputDelay',1);
+    [parametryG2(:,i) normaG2(i)]=identyfikacja(G2(i));
+    G2_CC(i)=tf(1,[parametryG2(1:i) 1],'InputDelay',parametryG2(2,i));
 end
-%%
+
 T3 = [0.005 0.01 0.02 0.05 0.1 0.2 0.5 2 5 10];
 for i = 1:length(T3);
     G3(i) = tf(1,[T3(i)*T3(i) T3(i)*T3(i) 2*T3(i) 1 1],'InputDelay',1);
     G3(i) = tf(1,[T3(i) 1],'InputDelay',1);
     [parametryG3(:,i) normaG3(i)]=identyfikacja(G3(i));
-    G3_CC(i)=tf(1,[parametryG3(1,i) 1],'InputDelay',parametryG3(2,i));
+    G3_CC(i)=tf(1,[parametryG3(1:i) 1],'InputDelay',parametryG3(2,i));
 end
-%%
+
 n4 = [ 3 4 5 6 7 8];
 for i = 1:length(n4);
     syms s;
